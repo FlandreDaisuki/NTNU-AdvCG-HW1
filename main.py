@@ -14,10 +14,10 @@ def main():
     fov = 100.0 * np.pi / 180.0 # rad
     sphere = {'c':[0.0, 1.0, 10.0], 'r': 2.0} # x, y, z, r
 
-    depth = np.arctan(fov / 2) * np.hypot(resolution['w'], resolution['h'])/2
+    depth = (1 / np.tan(fov / 2)) * np.hypot(resolution['w'], resolution['h'])/2
 
-    ww = resolution['w']//2*2
-    hh = resolution['h']//2*2
+    ww = (resolution['w'] // 2) * 2
+    hh = (resolution['h'] // 2) * 2
     canvas = np.zeros((hh, ww))
 
     hi = 0
