@@ -24,7 +24,7 @@ def data2rad(s):
 
 def rotateMatFromNegZ(vec):
     # http://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
-    v1 = vector([0, 0, -1])
+    v1 = vector([0, 0, 1])
     v2 = normalize(vec)
     v = cross(v1, v2)
     s = L2norm(v)
@@ -94,7 +94,7 @@ def main():
     pprint(data)
 
     eyePos = vector(data['E'])
-    viewDir = vector(data['V']) # OpenGL coordinate system
+    viewDir = vector(data['V']) # Left-hand coordinate system
     resolution = data['R']
     fov = data2rad(data['F']) # radian
     spheres = data['S']
@@ -102,20 +102,20 @@ def main():
 
     # pre-processing
     rh, rw = resolution['h'], resolution['w']
-    depth = (1 / tan(fov / 2)) * np.hypot(rw, rh) / 2 # depth.png
+    depth = (rw / 2) / tan(fov / 2) # depth2.png
     hrange = -(np.arange(rh) - rh // 2) # from + h/2 to -h/2
     wrange = np.arange(rw) - rw // 2
     canvas = np.zeros((rh, rw))
     objectList = {'S': spheres, 'T': triangles}
 
-    # All vectors will rotate from (.0, .0, -1.0) to viewDir
+    # All vectors will rotate from (.0, .0, 1.0) to viewDir
     Rmatrix = rotateMatFromNegZ(viewDir)
 
     hr0, wr0 = hrange[0], wrange[0]
     for h in hrange:
         for w in wrange:
             (hi, wi) = (hr0 - h, w - wr0)
-            vec = normalize([[w, h, -depth]])
+            vec = normalize([[w, h, depth]])
             ray = {'o': vector(eyePos), 'd': (Rmatrix * vec.T).A1}
             canvas[hi][wi] = 1 if isIntersected(ray, objectList) else 0
 
