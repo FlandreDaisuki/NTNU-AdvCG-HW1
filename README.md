@@ -5,6 +5,7 @@ detail: http://cg.csie.ntnu.edu.tw/AdvCG/Assignment1.pdf
 According to [input file](http://cg.csie.ntnu.edu.tw/AdvCG/hw1_input.txt), it is a left-hand coordinate.
 
 According to senpai, F(fov) represent for horizontal angle.
+
 ![](./depth2.png)
 
 ## Requirement
@@ -12,6 +13,10 @@ According to senpai, F(fov) represent for horizontal angle.
   - python 3.x
     - numpy
     - scipy
+
+## Example result
+
+![](./results/1489758169/result.png)
 
 ## Q&A
 
